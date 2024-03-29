@@ -9,48 +9,18 @@ const generateWhere = (query, album_id) => {
 }
 
 export const getMusicVideos = expressAsyncHandler(async (req, res, next) => {
-
+ 
     const { page, pageSize, query, album_id, category } = req.query
-    let videos = []
-    if (query !== undefined || album_id !== undefined) {
-        videos = await client.videos.findMany({
-            take: parseInt(pageSize),
-            skip: (page - 1) * pageSize,
-            distinct: ['title', 'album_id', 'id_'],
-            where: {
-                OR: [
-                    {
-                        title: { contains: query }
-                    },
-                    { album_id: parseInt(album_id) },
-                ]
-            }
-        });
-    } else {
-        console.log('hello');
-        videos = await client.videos.findMany({
-            take: parseInt(pageSize),
-            skip: (page - 1) * pageSize,
-            distinct: ['title', 'album_id', 'id_']
-        });
-    }
-
-    if (category === 'trending') {
-        videos = await client.videos.findMany({
-            take: 200,
-            // skip: (page - 1) * pageSize,
-            distinct: ['title', 'album_id', 'id_'],
-            where: {
-                OR: [
-                    {
-                        title: { contains: query }
-                    },
-                    { album_id: parseInt(album_id) },
-                ]
-            }
-        });
-        videos = videos.filter((video) => parseInt(video.views) > 10000000)
-    }
+    const pageNumber = parseInt(page, 10);
+    const size = parseInt(pageSize, 10);  
+    if(!query) return false
+    const videos = await client.videos.findMany({
+        take: size,
+        skip: (pageNumber - 1) * size,
+        where: {
+            artist_id: parseInt(query),
+        },
+    });
     res.status(200).json({
         status: true,
         videos
