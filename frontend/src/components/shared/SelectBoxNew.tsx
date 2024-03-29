@@ -1,19 +1,23 @@
-"use client";
+'use client'
 import { Listbox, Transition } from "@headlessui/react";
 import { IconChevronDown } from "@tabler/icons-react";
+import { log } from "console";
 // import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 
 type Props = {
   options: { label: string }[];
+  onChange: (newValue: { label: string }) => void; // Add this line
+  value: string;
 };
-
-export default function SelectBox({ options }: Props) {
-  const [selected, setSelected] = useState(options[0]);
-
+export default function SelectBoxNew({ options, onChange, value }: Props) {
+  const [selected, setSelected] = useState(options[2]);
   return (
     <div className="select-box">
-      <Listbox value={selected} onChange={setSelected}>
+      <Listbox value={selected} onChange={(newValue) => {
+        onChange(newValue);
+        setSelected(newValue)
+      }}>
         <div>
           <Listbox.Button className="select-box">
             <span>{selected.label}</span>

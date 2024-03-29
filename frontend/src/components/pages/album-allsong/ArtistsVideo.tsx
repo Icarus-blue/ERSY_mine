@@ -6,7 +6,7 @@ import ShortMusicVideo from "@/components/shared/ShortMusicVideo";
 import { fetchData } from "@/utils/fetchData";
 import { useState, useEffect } from "react";
 import { IconFilter, IconSearch } from "@tabler/icons-react";
-import SelectBox from "@/components/shared/SelectBox";
+import SelectBoxNew from "@/components/shared/SelectBoxNew";
 import Link from "next/link";
 
 type Props = {
@@ -69,7 +69,7 @@ const ArtistsVideo = ({ sectionTitle, artist }: Props) => {
               <IconSearch />
             </button>
           </form>
-          <SelectBox
+          <SelectBoxNew
             options={sortMode}
             value={queryobj.sortMode}
             onChange={(newValue) => handleSortChange(newValue)} // Handle changes

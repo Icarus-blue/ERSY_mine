@@ -1,7 +1,7 @@
 'use client'
 import { artistCardData } from "@/../public/data/artistsCardData";
 import LoadMore from "@/components/shared/LoadMore";
-import SelectBox from "@/components/shared/SelectBox";
+import SelectBoxNew from "@/components/shared/SelectBoxNew";
 import { IconFilter, IconSearch } from "@tabler/icons-react";
 import ArtistsSliderCard from "../home/ArtistsSliderCard";
 import { fetchData } from "@/utils/fetchData";
@@ -266,7 +266,7 @@ const PopularArtists = () => {
               <IconSearch />
             </button>
           </form>
-          <SelectBox
+          <SelectBoxNew
             options={sortMode}
             value={queryobj.sortMode}
             onChange={(newValue) => handleSortChange(newValue)} // Handle changes
