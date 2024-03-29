@@ -48,17 +48,14 @@ const PopularArtists = () => {
       age: [],
       groupType: [],
       labels: []
-      // other filter categories
     }
   });
 
   useEffect(() => {
     const str = JSON.stringify(queryobj);
-    console.log('Query:', str);
     const getData = async () => {
       let data = await fetchData('/data/artists', 1, 32, str)
       data.artists && setArtists(data.artists)
-      console.log(data.artists);
     }
     getData()
   }, [queryobj])
@@ -83,7 +80,6 @@ const PopularArtists = () => {
   };
 
   const handleSortChange = (newSortMode: { label: string }) => {
-    console.log(newSortMode);
     setQueryObj(prevState => ({
       ...prevState,
       sortMode: newSortMode.label, // assuming you want the sortMode in a specific format
@@ -94,7 +90,6 @@ const PopularArtists = () => {
     const getData = async () => {
       let data = await fetchData('/data/artists', 1, 12)
       data.artists && setArtists(data.artists)
-      console.log(data.artists);
     }
     getData()
   }, [])

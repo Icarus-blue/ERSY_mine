@@ -78,6 +78,7 @@
 	color: var(--white);
 	align-items: center;
 }
+
 .cmn__simple{
 	padding: 12px 40px;
 	background: var(--base);
@@ -86,9 +87,24 @@
 	@include bodyfont;
 	color: var(--white);
 }
+
 .cmn__simple2{
-	padding: 12px 32px 15px;
+	padding: 10px 32px 15px;
 	background: var(--cmnbox);
+	font-size: 18px;
+	font-weight: 500;
+	@include bodyfont;
+	color: var(--white);
+	transition: all 0.4s;
+	&:hover{
+		background: var(--base);
+	}
+}
+
+.cmn__simple3{
+	padding: 15px;
+	background: var(--cmnbox1);
+	border-radius: 10px;
 	font-size: 18px;
 	font-weight: 500;
 	@include bodyfont;

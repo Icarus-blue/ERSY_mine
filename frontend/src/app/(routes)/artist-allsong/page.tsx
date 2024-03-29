@@ -1,5 +1,6 @@
 import { songUpgradeData } from "@/../public/data/songUpgrdeData";
 import SongUpgrade from "@/components/pages/album-allsong/SongUpgrade";
+import SongUpgradeTableRow from "@/components/pages/album-allsong/SongUpgradeTableRow";
 import Artist from "@/components/pages/artist-allsong/Artist";
 import MainBody from "@/components/shared/MainBody";
 import { store } from "@/redux/store";
@@ -19,15 +20,11 @@ const artistAllSong = async ({
   params: { slug: string };
   searchParams?: { [key: string]: string | undefined };
 }) => {
-
-
-  const data = await fetchData('/data/videos', 1, 10, searchParams?.artist)
   return (
     <>
       <Artist />
       <SongUpgrade
-
-        artistSong={data?.videos}
+        artist={searchParams?.artist}
         sectionTitle="Most Popular" />
     </>
   );

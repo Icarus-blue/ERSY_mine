@@ -32,7 +32,7 @@ const PodcastSection = () => {
               <IconSearch />
             </button>
           </form>
-          <SelectBox options={newItems} />
+          {/* <SelectBox options={newItems} /> */}
         </div>
         <ul className="nav nav-tabs" id="myTab" role="tablist">
           <li className="nav-item" role="presentation">

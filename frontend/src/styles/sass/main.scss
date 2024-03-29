@@ -160,3 +160,29 @@ video::-webkit-media-controls-timeline {
   width: fit-content;
   margin-left: auto;
 }
+
+
+.responsive-table {
+  overflow-x: auto;
+  margin-top: 30px;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      text-align: center;
+      padding: 15px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+
+    th,
+    td {
+      padding: 5px;
+    }
+  }
+}

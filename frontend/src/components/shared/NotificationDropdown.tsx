@@ -10,14 +10,14 @@ function NotificationDropdown({ }: Props) {
 
     const [notifications, setNotifications] = useState([])
 
-    useEffect(() => {
-        const getData = async () => {
-            const data = await fetchData('/notifications', 1, 3)
-            data.status && setNotifications(data.notifications)
-        }
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         const data = await fetchData('/notifications', 1, 3)
+    //         data.status && setNotifications(data.notifications)
+    //     }
 
-        getData()
-    }, [])
+    //     getData()
+    // }, [])
     return (
         <div
             className="dropdown-menu dropdown-menu-end "

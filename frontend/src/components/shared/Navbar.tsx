@@ -23,6 +23,7 @@ import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationDropdown from "./NotificationDropdown";
+import { tree } from "next/dist/build/templates/app-page";
 
 const Navbar = () => {
   const { isSidebarOpen, setIsSidebarOpen } = useContext(navbarContext);
@@ -55,6 +56,7 @@ const Navbar = () => {
                     height={52}
                     src="/img/logo/logo.png"
                     alt="img"
+                    priority={true}
                   />
                 </Link>
                 <div
@@ -224,7 +226,7 @@ const Navbar = () => {
                           data-popper-placement="bottom-end"
                         >
                           <div className="p-6">
-                            <div className="d-flex align-items-center mb-24 gap-3 max-width">                        
+                            <div className="d-flex align-items-center mb-24 gap-3 max-width">
                               <div className="flex-grow-1">
                                 <h5 className="fs-20 fw-600 white  mb-0">
                                   {user?.first_name} {user?.last_name}

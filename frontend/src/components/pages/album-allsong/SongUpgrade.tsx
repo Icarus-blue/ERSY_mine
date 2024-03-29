@@ -4,85 +4,253 @@ import SongUpgradeTableRow from "./SongUpgradeTableRow";
 import VideoCard from "../home/VideoCard";
 import ShortMusicVideo from "@/components/shared/ShortMusicVideo";
 import { fetchData } from "@/utils/fetchData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { IconFilter, IconSearch } from "@tabler/icons-react";
+import SelectBox from "@/components/shared/SelectBox";
+import Link from "next/link";
+
 type Props = {
   sectionTitle: string;
-  artistSong: {
-    id?: string;
-    title?: string;
-    location?: string;
-    listeners?: number;
-    img?: string;
-    id_?: string;
-    artist_id?: string;
-    artist_name?: string;
-    artist_url?: string;
-    feat_artists?: string;
-    video_id?: string;
-    uploader?: string;
-    release_date?: Date;
-    added_date?: Date;
-    category?: string;
-    views?: string;
-    duration: number;
-  }[];
-  album_id?: string;
-  album?: string;
+  artist: string
 };
 
-const SongUpgrade = ({ sectionTitle, artistSong, album, album_id }: Props) => {
+const sortMode = [
+  { label: "Most Views" },
+  { label: "Recent First" },
+  { label: "Old First" },
+];
 
-  const [artistSongs, setArtistSongs] = useState([...artistSong])
+const SongUpgrade = ({ sectionTitle, artist }: Props) => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [query, setQuery] = useState('')
+  const [videos, setVideos] = useState(null)
+  const [queryobj, setQueryObj] = useState({
+    genre: 'All Songs',
+    sortMode: 'Most Views',
+  });
+
+  const handleSearch = () => {
+
+  }
+
+  const handleSortChange = (newSortMode: { label: string }) => {
+    console.log(newSortMode);
+    setQueryObj(prevState => ({
+      ...prevState,
+      sortMode: newSortMode.label,
+    }));
+  };
+
+  useEffect(() => {
+    const getArtistsVideos = async () => {
+      try {
+        const data = await fetchData('/data/videos', 1, 32, artist)
+        setVideos(data.videos)
+        console.log(data.videos)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getArtistsVideos()
+  }, [])
 
   return (
-    // <!--song upgrade section-->
-    <section className="latest__upgrade pb-100 pr-24 pl-24">
-      <div className="container-flud p-0">
-        <h3 className="white mb-16">{sectionTitle}</h3>
-        <div className="row">
-          <div className="col-lg-6 col-md-6">
-            <div className="latest__songwrap moods__allsong">
-              <table className="table align-middle align-center w-100">
-                <tbody>
-                  {artistSongs?.slice(0, artistSongs.length/2+1).map(({ ...props }, index) => (
-                    <ShortMusicVideo
-                      key={props.id_}
-                      {...props}
-                      index={index + 1}
-                    />
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6">
-            <div className="latest__songwrap moods__allsong">
-              <table className="table align-middle align-center w-100">
-                <tbody>
-                  {artistSongs?.slice(5, -1).map(({ id, ...props }, index) => (
-                    <ShortMusicVideo
-                      key={props.id_}
-                      {...props}
-                      index={index + 1}
-                    />
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+
+    <section className="trending__section pr-24 pl-24 pb-100">
+      <div className="trending__selected mb-30 d-flex align-items-center justify-content-center justify-content-lg-between">
+        <div className="select__lefts d-flex align-items-center">
+          <form
+            onSubmit={handleSearch}
+            className="d-flex align-items-center justify-content-between"
+          >
+            <input type="text" name="query" onChange={(e) => setQuery(e.target.value)} value={query} placeholder="Search..." />
+            <button type="submit" aria-label="submit button">
+              <IconSearch />
+            </button>
+          </form>
+          <SelectBox
+            options={sortMode}
+            value={queryobj.sortMode}
+            onChange={(newValue) => handleSortChange(newValue)} // Handle changes
+          />
         </div>
-        <div className="text-center mt-40">
-          {/* <button className="cmn__simple2"
-            onClick={async () => {
-              const data = await fetchData('/data/videos', artistSong.length / 10 === 1 ? 2 : artistSong.length / 10, 10, null, parseInt(album_id), album)
-              data.status && (
-                setArtistSongs(prev => ([...prev, ...data.videos]))
-              )
-            }}
-          >Load More</button> */}
+        <ul className="nav nav-tabs" id="myTab" role="tablist">
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link active"
+              id="home-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#home-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="home-tab-pane"
+              aria-selected="true"
+              aria-label="home-tab"
+            >
+              ALL SONGS
+            </button>
+          </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link"
+              id="profile-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#profile-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="profile-tab-pane"
+              aria-selected="false"
+              aria-label="profile-tab"
+            >
+              MUSIC VIDEOS
+            </button>
+          </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link"
+              id="contact-tab"
+              aria-label="contact-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#contact-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="contact-tab-pane"
+              aria-selected="false"
+            >
+              INTERVEIWS
+            </button>
+          </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link "
+              id="home-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#pop-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="pop-tab-pane"
+              aria-selected="true"
+              aria-label="home-tab"
+            >
+              GALLERY
+            </button>
+          </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link"
+              id="profile-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#reggae-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="reggae-tab-pane"
+              aria-selected="false"
+              aria-label="profile-tab"
+            >
+              COLLABORATIONS
+            </button>
+          </li>
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link"
+              id="contact-tab"
+              aria-label="contact-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#jazz-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="jazz-tab-pane"
+              aria-selected="false"
+            >
+              TWITTER
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div className="container-fluid">
+        <div className="tab-content" id="myTabContent">
+          <div
+            className="tab-pane fade show active"
+            id="home-tab-pane"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div className="row g-4">
+              {videos && (
+                <>
+                  {videos.map(({ id, ...props }: any) => (
+                    <div
+                      key={id}
+                      className="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-6"
+                    >
+                      <VideoCard key={id} {...props} link="album-allsong" />
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+            <div className="text-center mt-60 " >
+              <Link href="#" onClick={async (e) => {
+                e.preventDefault()
+                setIsLoading(true)
+                const data = await fetchData('/data/videos', currentPage === 0 ? 3 : currentPage + 1, 32,artist)
+                setVideos(prev => ([...prev, ...data.videos]))
+                setCurrentPage(prev => prev + 1)
+                setIsLoading(false)
+              }} className="cmn__simple2" >
+                {isLoading ? 'loading...' : 'Load More'}
+              </Link>
+            </div>
+          </div>
+          <div
+            className="tab-pane fade"
+            id="profile-tab-pane"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          >
+            <div className="row g-4">
+            </div>
+          </div>
+          <div
+            className="tab-pane fade"
+            id="contact-tab-pane"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <div className="row g-4">
+            </div>
+          </div>
+          <div
+            className="tab-pane fade"
+            id="pop-tab-pane"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <div className="row g-4">
+            </div>
+          </div>
+          <div
+            className="tab-pane fade"
+            id="reggae-tab-pane"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <div className="row g-4">
+            </div>
+          </div>
+          <div
+            className="tab-pane fade"
+            id="jazz-tab-pane"
+            role="tabpanel"
+            aria-labelledby="contact-tab"
+          >
+            <div className="row g-4">
+            </div>
+          </div>
         </div>
       </div>
-    </section >
+    </section>
   );
 };
 

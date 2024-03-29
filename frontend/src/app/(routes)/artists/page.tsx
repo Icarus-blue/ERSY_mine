@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const artists = () => {
   return (
     <>
-      <BreadCrumb page="Popular Artists" />
+      <BreadCrumb page="Artists" />
       <PopularArtists />    
     </>
   );

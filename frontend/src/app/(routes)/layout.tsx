@@ -29,7 +29,6 @@ export default function HomeLayout({
       // dispatch(logout(""))
       return toast(data.message, { theme: 'dark' })
     }
-    console.log(data)
     dispatch(login({ ...data.user, last_name: data.user.fullName?.split(' ')[0], first_name: data.user.fullName?.split(' ')[1], img_: data.user.img_, access_token: localStorage.getItem('access_token') }))
 
   }

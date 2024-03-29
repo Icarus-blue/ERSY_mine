@@ -35,11 +35,7 @@ const AddProfileImage = () => {
             toast(error.message, { theme: 'dark' })
         }
     }
-
-    useEffect(() => {
-        console.log(user)
-
-    }, [selectedImage])
+    
     return (
         <div className="modal fade" id="addProfileImage" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">

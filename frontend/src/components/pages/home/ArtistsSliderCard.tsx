@@ -18,6 +18,7 @@ type Props = {
 };
 
 const ArtistsSliderCard = ({ img_, name_, id_, views, monthly_listeners, facebook_count, youtube_count, twitter_count, spotify_count, soundcloud_count, instagram_count, gallery_count }: Props) => {
+
   const formatNumber = (num: number): string => {
     if (num >= 1_000_000_000) {
       return (num / 1_000_000_000).toFixed(1) + 'B';
@@ -32,7 +33,7 @@ const ArtistsSliderCard = ({ img_, name_, id_, views, monthly_listeners, faceboo
   return (
     <div className="swiper-slide trending__item round30 p-8">
       <div className="thumb ralt overhid transition">
-        <Link href={`/artist-allsong?artist=${name_}`} className="white">
+        <Link href={`/artist-allsong?artist=${id_}`} className="white">
           <Image
             src={`/img22/img/profile/${img_}`}
             width={300}
@@ -40,6 +41,7 @@ const ArtistsSliderCard = ({ img_, name_, id_, views, monthly_listeners, faceboo
             style={{ borderRadius: '50%', justifyContent: 'center' }}
             className="transition h-auto"
             alt="img"
+            priority={true}
           />
         </Link>
         <div className="align-items-center justify-content-center"
