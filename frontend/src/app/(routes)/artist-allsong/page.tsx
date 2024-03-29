@@ -1,6 +1,6 @@
 import { songUpgradeData } from "@/../public/data/songUpgrdeData";
 import SongUpgrade from "@/components/pages/album-allsong/SongUpgrade";
-import SongUpgradeTableRow from "@/components/pages/album-allsong/SongUpgradeTableRow";
+import ArtistsVideo from "@/components/pages/album-allsong/ArtistsVideo";
 import Artist from "@/components/pages/artist-allsong/Artist";
 import MainBody from "@/components/shared/MainBody";
 import { store } from "@/redux/store";
@@ -23,7 +23,7 @@ const artistAllSong = async ({
   return (
     <>
       <Artist />
-      <SongUpgrade
+      <ArtistsVideo
         artist={searchParams?.artist}
         sectionTitle="Most Popular" />
     </>

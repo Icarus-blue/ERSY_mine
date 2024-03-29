@@ -1,5 +1,5 @@
 import { podCastData } from "@/../public/data/podCastData";
-
+import SelectBox from "@/components/shared/SelectBox";
 import { IconSearch } from "@tabler/icons-react";
 import Link from "next/link";
 import PodcastCard from "./PodcastCard";
@@ -32,7 +32,7 @@ const PodcastSection = () => {
               <IconSearch />
             </button>
           </form>
-      
+          {/* <SelectBox options={newItems} /> */}
         </div>
         <ul className="nav nav-tabs" id="myTab" role="tablist">
           <li className="nav-item" role="presentation">

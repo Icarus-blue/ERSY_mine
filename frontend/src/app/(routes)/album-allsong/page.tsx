@@ -26,7 +26,6 @@ const albumAllSong = async ({
         album={searchParams.album}
         album_id={searchParams.album_id}
         sectionTitle="Mix All Songs"
-
         artistSong={data?.status ? data.videos : []} />
     </>
   );
